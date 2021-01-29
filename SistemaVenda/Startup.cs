@@ -13,6 +13,12 @@ using Microsoft.AspNetCore.Mvc;
 using SistemaVenda.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Aplicacao.Servico;
+using Aplicacao.Servico.Interfaces;
+using Dominio.Interfaces;
+using Dominio.Servicos;
+using Dominio.Repositorio;
+using Repositorio.Entidades;
 
 namespace SistemaVenda
 {
@@ -28,10 +34,36 @@ namespace SistemaVenda
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //fica por enquanto, pois o projeto ainda 
+            //não foi completamente migrado para o padrão DDD
             services.AddDbContext<ApplicationDbContext>(options => 
             options.UseSqlServer(Configuration.GetConnectionString("MyStock")));
+
+            // a princípio será definitivo
+            services.AddDbContext<Repositorio.Contexto.ApplicationDbContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("MyStock")));
+
             services.AddHttpContextAccessor();
             services.AddSession();
+            
+            //Servico Aplicação
+            services.AddScoped<IServicoAplicacaoCategoria, ServicoAplicacaoCategoria>();
+            services.AddScoped<IServicoAplicacaoCliente, ServicoAplicacaoCliente>();
+            services.AddScoped<IServicoAplicacaoProduto, ServicoAplicacaoProduto>();
+
+
+            //Dominio
+            services.AddScoped<IServicoCategoria, ServicoCategoria>();
+            services.AddScoped<IServicoCliente, ServicoCliente>();
+            services.AddScoped<IServicoProduto, ServicoProduto>();
+
+
+
+            //Repositorio
+            services.AddScoped<IRepositorioCategoria, RepositorioCategoria>();
+            services.AddScoped<IRepositorioCliente, RepositorioCliente>();
+            services.AddScoped<IRepositorioProduto, RepositorioProduto>();
+
 
             services.AddControllersWithViews();
 

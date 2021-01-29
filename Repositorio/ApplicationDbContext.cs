@@ -1,12 +1,7 @@
-﻿using Aplicacao.Entidades;
-using Microsoft.EntityFrameworkCore;
-using SistemaVenda.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using SistemaVenda.Dominio.Entidades;
 
-namespace SistemaVenda.DAL
+namespace Repositorio.Contexto
 {
     public class ApplicationDbContext : DbContext
     {

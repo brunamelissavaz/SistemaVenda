@@ -38,6 +38,7 @@ namespace SistemaVenda.Controllers
 
         [HttpPost]
         public IActionResult Index(LoginViewModel model)
+        
         {
             ViewData["ErroLogin"] = string.Empty;
             if (ModelState.IsValid)

@@ -25,5 +25,7 @@ namespace SistemaVenda.Models
         public int? CodigoCetegoria { get; set; }
 
         public IEnumerable<SelectListItem> ListaCategorias { get; set; }
+
+        public string DescricaoCategoria { get; set; }
     }
 }
