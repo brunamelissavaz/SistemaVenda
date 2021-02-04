@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Dominio.Repositorio
 {
-    public interface IRepositorioCategoria : IRepositorio<Categoria>  
+    public interface IRepositorioVenda : IRepositorio<Venda>  
     {
-
-
+        new void Delete(int id);
     }
 }

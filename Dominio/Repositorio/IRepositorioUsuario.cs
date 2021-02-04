@@ -5,9 +5,11 @@ using System.Text;
 
 namespace Dominio.Repositorio
 {
-    public interface IRepositorioCategoria : IRepositorio<Categoria>  
+    public interface IRepositorioUsuario : IRepositorio<Usuario>  
     {
+        bool ValidarLogin(string email, string senha);
 
+       
 
     }
 }

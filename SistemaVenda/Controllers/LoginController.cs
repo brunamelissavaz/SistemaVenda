@@ -8,20 +8,22 @@ using SistemaVenda.DAL;
 using SistemaVenda.Helpers;
 using SistemaVenda.Models;
 using System.Security.Cryptography;
+using Aplicacao.Servico.Interfaces;
 
 namespace SistemaVenda.Controllers
 {
     public class LoginController : Controller
-    {
-
-        protected ApplicationDbContext mContext;
+    {      
         protected IHttpContextAccessor HttpContextAcessor;
+        readonly IServicoAplicacaoUsuario ServicoAplicacaoUsuario;
+        protected ApplicationDbContext mContext;
 
 
 
-        public LoginController(ApplicationDbContext context, IHttpContextAccessor httpContext)
+        public LoginController(ApplicationDbContext context, IServicoAplicacaoUsuario servicoAplicacaoUsuario, IHttpContextAccessor httpContext)
         {
             mContext = context;
+            ServicoAplicacaoUsuario = servicoAplicacaoUsuario;
             HttpContextAcessor = httpContext;
         }
         public IActionResult Index(int? id)
@@ -41,16 +43,20 @@ namespace SistemaVenda.Controllers
         
         {
             ViewData["ErroLogin"] = string.Empty;
+
             if (ModelState.IsValid)
             {
-                var Senha = Criptografia.GetMd5Hash(model.Senha); 
+                var Senha = Criptografia.GetMd5Hash(model.Senha);
+               // bool login = ServicoAplicacaoUsuario.ValidarLogin(model.Email, Senha);
                 var usuario = mContext.Usuario.Where(x => x.Email == model.Email && x.Senha == Senha).FirstOrDefault();
 
-                if (usuario== null)
+                if (usuario == null)
                 {
                     ViewData["ErroLogin"] = "O Email ou Senha informado não existe no sistema!";
 
                     return View(model);
+
+
                 }
                 else
                 {
